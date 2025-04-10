@@ -10,21 +10,7 @@
     <form method="POST" class="needs-validation" novalidate="" autocomplete="off" enctype="multipart/form-data">
       {% csrf_token %}
 
-      {% if messages %}
-        {% for message in messages %}
-          {% if 'success' in message.tags %}
-            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          {% else %}
-            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          {% endif %}
-        {% endfor %}
-      {% endif %}
+      
 
       <div class="mb-3">
         <label class="mb-2 text-muted" for="user_status">Choose Your Status :</label>
@@ -134,7 +120,7 @@
   <div class="card-footer py-3 border-0">
     <div class="text-center">
       Already have an account?
-      <a href="{% url 'login' %}" class="text-dark secondary-color">Login</a>
+      <a href="{% url 'logins' %}" class="text-dark secondary-color">Login</a>
     </div>
   </div>
 </div>
