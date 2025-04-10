@@ -1,0 +1,102 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block title %}E-Hospital{% endblock title %}
+
+{% block content %}
+<style>
+  body {
+    background-image: url("{% static 'img/adminlogin.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .full-height-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+
+  .login-card h1 {
+    font-size: 1.8rem;
+    color: #185a9d;
+  }
+
+  .login-card .form-control {
+    border-radius: 0.5rem;
+  }
+
+  .login-card .btn-primary {
+    background: linear-gradient(135deg, #43cea2, #185a9d);
+    border: none;
+    transition: 0.3s ease-in-out;
+    border-radius: 0.5rem;
+  }
+
+  .login-card .btn-primary:hover {
+    background: linear-gradient(135deg, #185a9d, #43cea2);
+    transform: scale(1.02);
+  }
+
+  .login-card .btn-admin {
+    font-size: 0.81rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 0.4rem;
+    margin-top: 0.6rem;
+  }
+
+  .login-card a.secondary-color:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container full-height-container">
+  <div class="card login-card shadow-lg p-4" style="max-width: 26rem; width: 100%;">
+    <div class="card-body">
+      <h1 class="card-title fw-bold text-center mb-4">E-Hospital</h1>
+
+      <form method="POST" class="needs-validation" novalidate autocomplete="off" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label text-muted" for="email">User ID</label>
+          <input id="email" type="text" class="form-control" name="username" required autofocus />
+          <div class="invalid-feedback">User ID is invalid</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-muted" for="password">Password</label>
+          <a href="{% url 'password-reset' %}" class="float-end text-primary">Forgot Password?</a>
+          <input id="password" type="password" class="form-control" name="password" required />
+          <div class="invalid-feedback">Password is required</div>
+        </div>
+
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card-footer text-center bg-transparent border-0 mt-2">
+      <small>
+        Don't have an account?
+        <a href="{% url 'register' %}" class="text-dark secondary-color fw-semibold">Sign Up</a>
+      </small>
+      <div class="mt-2">
+        <a href="{% url 'admin:index' %}" class="btn btn-sm btn-dark btn-admin">Admin Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

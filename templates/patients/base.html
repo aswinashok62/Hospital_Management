@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>{% block title %}{% endblock title %} - E Hospital</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'img/icon_app.png' %}">
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+  <style>
+    /* Dark Blue Theme and Animation Enhancements */
+    body {
+      background-color: #f4f6f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .navbar {
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .navbar .nav-link {
+      color: #dee2e6;
+      font-weight: 500;
+      margin-right: 15px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .navbar .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background-color: #00b4d8;
+      left: 0;
+      bottom: -4px;
+      transition: width 0.3s ease;
+    }
+
+    .navbar .nav-link:hover {
+      color: #00b4d8;
+    }
+
+    .navbar .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .navbar-brand {
+      font-size: 26px;
+      font-weight: bold;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    .navbar-toggler {
+      background-color: #ffffff;
+    }
+
+    .profile-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-img:hover {
+      transform: scale(1.05);
+    }
+
+    h2 {
+      font-weight: 600;
+      color: #0d1b2a;
+      border-bottom: 2px solid #1b263b;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    .btn-danger {
+      background-color: #e63946;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-danger:hover {
+      background-color: #d62828;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'patient_dashboard' %}">E Hospital</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="{% url 'patient_dashboard' %}">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'patient_profile' %}">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'patient_blogs' %}">Blogs</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'book_appointment' %}">Book Appointments</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'my_appointments' %}">My Appointments</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a href="{% url 'patient_profile' %}" class="d-flex align-items-center text-white text-decoration-none">
+            <img src="{{ request.user.profile_avatar.url }}" class="profile-img me-2">
+            <span class="fw-semibold">{{ request.user.username|safe|truncatechars:"10" }}</span>
+          </a>
+          <a href="{% url 'logout' %}" class="btn btn-danger ms-3">Log Out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mt-4 animate__animated animate__fadeIn">
+    <h2>{% block page_title %}{% endblock page_title %}</h2>
+    {% block content %}
+    {% endblock content %}
+  </div>
+
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

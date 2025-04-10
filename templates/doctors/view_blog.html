@@ -1,0 +1,147 @@
+{% extends base_template %}
+{% load static %}
+
+{% block title %} Blog Article {% endblock title %}
+
+{% block page_title %}
+  {{ blog.title|slice:":50"|wordwrap:50|default:'' }}{% if blog.title|length > 50 %}...{% endif %}
+{% endblock page_title %}
+
+{% block content %}
+<main>
+  <section class="blog_area sec_pad py-5">
+    <div class="container">
+      <div class="row gy-5">
+        <!-- Blog Content -->
+        <div class="col-lg-8">
+          <div class="blog_list_item mb-4 p-4 bg-light rounded shadow-sm">
+            <img class="img-fluid rounded mb-3" src="{{ blog.thumbnail.url }}" alt="Blog Thumbnail">
+            <div class="blog_content">
+              <div class="d-flex justify-content-between align-items-center mb-2 text-muted">
+                <div class="post_date">
+                  <h5 class="mb-0">{{ blog.posted_at|date:'d M, Y' }}</h5>
+                </div>
+                <div class="entry_post_info">
+                  <small>By: <strong>{{ blog.doctor }}</strong></small> | 
+                  <small>{{ blog.id_category }}</small>
+                </div>
+              </div>
+              <h3 class="fw-bold">{{ blog.title }}</h3>
+              <p class="text-dark mt-3" style="line-height: 1.7;">{{ blog.description|safe }}</p>
+
+              {% if blog.summary %}
+              <hr class="my-4">
+              <h5 class="fw-semibold">Summary</h5>
+              <p>{{ blog.summary|safe }}</p>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Related Posts -->
+          {% if related_blogs %}
+          <div class="mb-5">
+            <h4 class="mb-3">📌 Related Posts</h4>
+            <div class="row g-4">
+              {% for blog in related_blogs %}
+              <div class="col-sm-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                  <a href="/blog/{{ blog.blog_id }}">
+                    <img src="{{ blog.thumbnail.url }}" class="card-img-top" alt="Related Blog Image">
+                  </a>
+                  <div class="card-body p-2">
+                    <small class="text-muted">{{ blog.posted_at }}</small>
+                    <h6 class="card-title mt-1">
+                      <a href="/blog/{{ blog.blog_id }}" class="text-decoration-none text-dark">{{ blog.title|truncatewords:10 }}</a>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Comments -->
+          <div class="mt-5">
+            <h4 class="mb-3">💬 Comments ({{ comments.count }})</h4>
+            <ul class="list-unstyled">
+              {% for comment in comments %}
+              <li class="d-flex mb-4 border-bottom pb-3">
+                <img class="rounded-circle me-3" src="{{ comment.user.profile_avatar.url }}" alt="" width="60" height="60">
+                <div>
+                  <h6 class="fw-semibold mb-0">{{ comment.user.username }}</h6>
+                  <small class="text-muted">{{ comment.commented_at }}</small>
+                  <p class="mt-2 mb-0">{{ comment.content }}</p>
+                </div>
+              </li>
+              {% empty %}
+              <p>No comments yet.</p>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Comment Form -->
+          <div class="mt-5">
+            <h4 class="mb-3">📝 Leave a Comment</h4>
+            <form method="post" action="{% url 'comment' %}" class="row g-3">
+              {% csrf_token %}
+              <div class="col-12">
+                <textarea class="form-control" name="comment" rows="4" placeholder="Write your comment here..."></textarea>
+              </div>
+              <input type="hidden" name="id" value="{{ blog.blog_id }}">
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary px-4">Post Comment</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <div class="bg-white p-3 rounded shadow-sm sticky-top" style="top: 100px;">
+            <!-- Search -->
+            <div class="mb-4">
+              <form method="get" action="{% url 'search_blogs' %}" class="d-flex">
+                <input type="search" class="form-control me-2" name="keyword" placeholder="Search blog...">
+                <button class="btn btn-outline-primary" type="submit"><i class="ti-search"></i></button>
+              </form>
+            </div>
+
+            <!-- Recent Blogs -->
+            <div class="mb-4">
+              <h5 class="fw-semibold mb-3">📰 Recent Blogs</h5>
+              {% for recent_blog in recent_blogs %}
+              <div class="d-flex mb-3">
+                <a href="/blog/{{ recent_blog.blog_id }}">
+                  <img src="{{ recent_blog.thumbnail.url }}" class="rounded" style="width: 60px; height: 50px; object-fit: cover; margin-right: 10px;">
+                </a>
+                <div>
+                  <a href="/blog/{{ recent_blog.blog_id }}" class="text-dark text-decoration-none">
+                    <h6 class="mb-1">{{ recent_blog.title|truncatewords:8 }}</h6>
+                  </a>
+                  <small class="text-muted">By {{ recent_blog.doctor }} / {{ recent_blog.posted_at|date:"M d" }}</small>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <!-- Categories -->
+            <div>
+              <h5 class="fw-semibold mb-3">📚 Categories</h5>
+              <ul class="list-unstyled">
+                {% for category in categories %}
+                <li class="mb-2">
+                  <a href="/category/{{ category.name }}" class="text-decoration-none text-dark">
+                    • {{ category.name }}
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

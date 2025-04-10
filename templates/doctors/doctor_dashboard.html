@@ -1,0 +1,99 @@
+{% extends 'doctors/base.html' %}
+{% load static %}
+
+{% block title %} Dashboard {% endblock title %}
+{% block page_title %} Doctor Dashboard {% endblock page_title %}
+
+{% block content %}
+<main>
+  <div class="row justify-content-between animate__animated animate__fadeIn">
+
+    <!-- Appointments Today -->
+    <div class="col-12 col-lg-4 mb-4">
+      <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #007bff, #00b4d8);">
+        <div class="card-body text-white text-center py-4">
+          <h5 class="card-title fs-5"><i class="bi bi-calendar-check-fill fs-3 mb-2"></i><br>Appointments Today</h5>
+          <p class="display-3 fw-bold my-2">{{ today_appointments }}</p>
+          <p class="fs-6"><i class="bi bi-clock"></i> <span id="current-time" class="fw-semibold"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Stats -->
+    <div class="col-12 col-lg-4 mb-4">
+      <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+        <div class="card-body text-white text-center py-4">
+          <h5 class="card-title fs-5"><i class="bi bi-journal-text fs-3 mb-2"></i><br>Blog Statistics</h5>
+          <p class="fs-6 my-2">Total Blogs: <strong>{{ total_blogs }}</strong></p>
+          <p class="fs-6">Published: <strong>{{ published_blogs }}</strong></p>
+          <p class="fs-6">Drafts: <strong>{{ draft_blogs }}</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointment Status -->
+    <div class="col-12 col-lg-4 mb-4">
+      <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #43cea2, #185a9d);">
+        <div class="card-body text-center py-4">
+          <h5 class="card-title fs-5 text-white">
+            <i class="bi bi-clipboard-check fs-3 mb-2"></i><br>Appointment Status
+          </h5>
+          <p class="fs-6 my-2 text-white">Total: <strong class="text-white">{{ total_appointments }}</strong></p>
+          <p class="fs-6 text-white">Accepted: <strong class="text-white">{{ accepted_appointments }}</strong></p>
+          <p class="fs-6 text-white">Waited: <strong class="text-white">{{ waited_appointments }}</strong></p>
+          <p class="fs-6 text-white">Cancelled: <strong class="text-white">{{ cancelled_appointments }}</strong></p>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Reminders -->
+    <div class="col-12 col-lg-4 mb-4">
+      <div class="card shadow-lg border-0 bg-light p-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-alarm-fill text-primary fs-2 me-3"></i>
+            <h5 class="mb-0">Reminders</h5>
+          </div>
+          <button class="btn btn-outline-primary rounded-circle" data-bs-toggle="modal" data-bs-target="#ReminderModal">
+            <i class="bi bi-calendar-plus fs-4"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reminder Modal -->
+  <div class="modal fade" id="ReminderModal" tabindex="-1" aria-labelledby="ReminderLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="ReminderLabel"><i class="bi bi-alarm-fill me-2"></i>Add Reminder</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="reminderDate" class="form-label">Date & Time</label>
+              <input type="datetime-local" class="form-control" id="reminderDate">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Save Reminder</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Live Clock Script -->
+<script>
+  function updateTime() {
+    const now = new Date();
+    const options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    document.getElementById("current-time").innerText = now.toLocaleTimeString([], options);
+  }
+  setInterval(updateTime, 1000);
+  updateTime();
+</script>
+
+{% endblock %}

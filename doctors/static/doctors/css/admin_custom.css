@@ -1,0 +1,93 @@
+/* 🌟 Stylish Admin Panel Buttons */
+input[type="submit"], .button, .submit-row input {
+    background: linear-gradient(135deg, #007bff, #00c6ff); /* Gradient background */
+    color: white !important;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect */
+input[type="submit"]:hover, .button:hover, .submit-row input:hover {
+    background: linear-gradient(135deg, #0056b3, #0093d1);
+    transform: scale(1.05);
+}
+
+/* 🛑 Delete Button */
+input[type="submit"].deletelink, .deletelink {
+    background: linear-gradient(135deg, #ff4b5c, #ff0033);
+    color: white !important;
+}
+
+input[type="submit"].deletelink:hover, .deletelink:hover {
+    background: linear-gradient(135deg, #c70039, #ff0000);
+    transform: scale(1.05);
+}
+
+/* ✅ Save & Add Another */
+.submit-row input[name="_addanother"] {
+    background: linear-gradient(135deg, #28a745, #00c851);
+}
+
+.submit-row input[name="_addanother"]:hover {
+    background: linear-gradient(135deg, #1e7e34, #009933);
+}
+
+/* 💾 Save Button */
+.submit-row input[name="_save"] {
+    background: linear-gradient(135deg, #6610f2, #a855f7);
+}
+
+.submit-row input[name="_save"]:hover {
+    background: linear-gradient(135deg, #4a0dbf, #8a2be2);
+}
+
+/* 🔄 Save & Continue Editing */
+.submit-row input[name="_continue"] {
+    background: linear-gradient(135deg, #ff851b, #ff4500);
+}
+
+.submit-row input[name="_continue"]:hover {
+    background: linear-gradient(135deg, #e67e22, #ff3300);
+}
+
+/* 🎨 Customize the Admin Header */
+#header {
+    background-color: #0056b3;
+    color: white;
+    padding: 15px;
+    font-size: 20px;
+}
+
+/* 📌 Change Sidebar Menu Background */
+#nav-sidebar {
+    background-color: #f8f9fa;
+    border-right: 2px solid #ddd;
+}
+
+/* 🔹 Style Navigation Links */
+#nav-sidebar .module th {
+    background: #007bff;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+/* ✨ Improve Table Appearance */
+#changelist-form table {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* 🛠 Improve List Display */
+#changelist .paginator {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+}

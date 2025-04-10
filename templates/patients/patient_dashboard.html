@@ -1,0 +1,105 @@
+{% extends 'patients/base.html' %}
+{% load static %}
+
+{% block title %} Dashboard {% endblock title %}
+{% block page_title %} Patient Dashboard {% endblock page_title %}
+
+{% block content %}
+<main style="padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+  <div style="
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  ">
+    <h2 style="margin: 0; font-weight: bold;">👨‍⚕️ Patient Dashboard</h2>
+    <p style="margin-top: 8px;">Overview of your medicine schedule and consumption.</p>
+  </div>
+
+  <div class="row justify-content-between g-4">
+    <!-- Medicine Timings -->
+    <div class="col-12 col-lg-6">
+      <div style="
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      ">
+        <h5 style="margin-bottom: 20px; font-weight: 600;"><i class="bi bi-clock-history me-2"></i>Medicine Timings</h5>
+        <table class="table table-bordered table-hover text-center">
+          <thead class="table-primary">
+            <tr>
+              <th>Med1</th>
+              <th>Med2</th>
+              <th>Med3</th>
+              <th>Med4</th>
+              <th>Med5</th>
+              <th>Med7</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>cit</td>
+              <td>Dolo</td>
+              <td>--</td>
+              <td>--</td>
+              <td>diz</td>
+              <td>pnk</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    
+        
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Medicine Consumption Section -->
+  <section class="recent mt-5">
+    <div class="activity-grid">
+      <div class="activity-card row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-12">
+          <div style="
+            background: #eaf4ff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+          ">
+            <h4 class="text-center mb-4" style="color: #0056b3;">💊 Medicine Consumption</h4>
+            <table class="table table-bordered table-striped text-center">
+              <thead class="table-info">
+                <tr>
+                  <th>Medicine</th>
+                  <th>Dosage</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Med-1</td>
+                  <td>7</td>
+                  <td><span class="badge bg-success">Taken</span></td>
+                </tr>
+                <tr>
+                  <td>Med-2</td>
+                  <td>12</td>
+                  <td><span class="badge bg-danger">Pending</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+{% endblock %}

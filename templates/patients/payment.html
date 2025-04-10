@@ -1,0 +1,97 @@
+{% extends 'patients/base.html' %}
+{% load static %}
+{% block title %} Payment {% endblock %}
+
+{% block content %}
+<main>
+    <div class="container">
+        <center>
+            <h3 style="color:red">PAYMENT DETAIL</h3>
+            <hr>
+        </center>
+        <center>
+            <div style="width:55%; background-color:lightgrey" class="jumbotron">
+                <div class="container">
+                    <div class="row">
+                        <!-- Payment method icons -->
+                        <div class="col-xs-4 col-md-4">
+                            <img style="width:150px;height:100px" class="img-responsive pull-right" src="{% static 'images/atm1.jpg' %}">
+                        </div>
+                        <div class="col-xs-4 col-md-4">
+                            <img style="width:150px;height:100px" class="img-responsive pull-right" src="{% static 'images/atm2.jpg' %}">
+                        </div>
+                        <div class="col-xs-4 col-md-4">
+                            <img style="width:150px;height:100px" class="img-responsive pull-right" src="{% static 'images/atm3.jpg' %}">
+                        </div>
+                    </div>
+
+                    <!-- Payment Form -->
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <!-- Card Number -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label style="margin:10px" for="cardNumber">CARD NUMBER</label>
+                                    <input style="margin:10px" type="tel" class="form-control" name="cardnumber" placeholder="Valid Card Number" required autofocus />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expiry & CVC -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cardExpiry">EXPIRY DATE</label>
+                                    <input type="tel" class="form-control" name="cardex" placeholder="MM / YY" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cardCVC">CVC CODE</label>
+                                    <input type="tel" class="form-control" name="cvc" placeholder="CVC" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Amount -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label style="margin:10px" for="amount">Amount In Rs.</label>
+                                    <input style="margin:10px" type="text" class="form-control" value="500" name="amount" readonly />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Button -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button style="color:white;font-size:20px" type="submit" class="btn btn-success btn-lg btn-block" name="payment_method" value="pay_now">Pay Now</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </center>
+    </div>
+</main>
+
+<!-- Display Messages -->
+{% if error %}
+<script>
+    alert('Payment processing failed. Please check your details and try again.');
+    window.location = "{% url 'payment' appointment.id %}";
+</script>
+{% endif %}
+
+{% if payment_success %}
+<script>
+    alert('Booking order Successfully');
+    window.location = "{% url 'my_appointments' %}";
+</script>
+{% endif %}
+
+{% endblock %}
