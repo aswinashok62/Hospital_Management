@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    path('', login_view, name='login'),
+    path('', login_view, name='logins'),
     path('register/', register, name='register'),
     path('login/', login_view, name='login_user'),
     path('password-reset/', forgot_view, name='password-reset'),
