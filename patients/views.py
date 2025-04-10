@@ -116,33 +116,49 @@ def patient_confirm_book(request, doctor):
 
 
 from django.contrib import messages
-from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from .models import Appointment
+import stripe
+from django.conf import settings
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+from django.urls import reverse
 
 @login_required(login_url='/login')
 def payment_view(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id)
 
-    if request.method == "POST":
-        payment_method = request.POST.get("payment_method")
+    # Create Stripe Checkout Session
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'inr',
+                'product_data': {
+                    'name': f'Appointment with {appointment.doctor.user.get_full_name()}',
+                },
+                'unit_amount': 50000,  # ₹500 in paisa
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url=request.build_absolute_uri(reverse('my_appointments')),  # ✅ Redirect here after success
+        cancel_url=request.build_absolute_uri(reverse('payment_cancel')),   # Optional: handle cancel
+    )
 
-        if payment_method == "pay_now":
-            # Simulate successful online payment (Replace with actual payment API)
-            messages.success(request, "Payment successful! Your appointment has been booked.")
-            return redirect('my_appointments')
+    return redirect(session.url, code=303)
 
-        elif payment_method == "cash_on_delivery":
-            # Simulate COD booking
-            messages.success(request, "Your appointment is booked. Please pay at the clinic.")
-            return redirect('my_appointments')
 
-        else:
-            messages.error(request, "Payment failed. Please try again.")
-            return render(request, 'patients/payment.html', {"appointment": appointment, "error": True})
+def payment_success(request):
+    return render(request, 'patients/payment_success.html')
 
-    return render(request, 'patients/payment.html', {"appointment": appointment})
+def payment_cancel(request):
+    return render(request, 'patients/payment_cancel.html')
+
+
 
 @login_required(login_url='/login')
 def chat_with_doctor(request, doctor_id):
@@ -200,3 +216,9 @@ def chat_with_patient(request, patient_id):
         'appointment': appointment,
         # 'chat_messages': ChatMessage.objects.filter(...),
     })
+
+
+from django.shortcuts import render
+
+def payment_success(request):
+    return render(request, 'patients/payment_success.html')  # create this template or change the name
